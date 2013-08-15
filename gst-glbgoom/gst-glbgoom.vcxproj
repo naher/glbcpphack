@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\config_param.c" />
+    <ClCompile Include="src\convolve_fx.c" />
+    <ClCompile Include="src\drawmethods.c" />
+    <ClCompile Include="src\filters.c" />
+    <ClCompile Include="src\flying_stars_fx.c" />
+    <ClCompile Include="src\glb_basic.cpp" />
+    <ClCompile Include="src\glb_circles_visualfx.cpp" />
+    <ClCompile Include="src\glb_ogre3d_visualfx.cpp" />
+    <ClCompile Include="src\glb_visualfx.cpp" />
+    <ClCompile Include="src\glb_vlines_visualfx.cpp" />
+    <ClCompile Include="src\goom_core.c" />
+    <ClCompile Include="src\goom_tools.c" />
+    <ClCompile Include="src\graphic.c" />
+    <ClCompile Include="src\gstgoom.c" />
+    <ClCompile Include="src\ifs.c" />
+    <ClCompile Include="src\lines.c" />
+    <ClCompile Include="src\mathtools.c" />
+    <ClCompile Include="src\mmx.c" />
+    <ClCompile Include="src\ogre3d\FileSystemLayerImpl_WIN32.cpp" />
+    <ClCompile Include="src\ogre3d\ParticleFX.cpp" />
+    <ClCompile Include="src\ogre3d\SampleBrowser.cpp" />
+    <ClCompile Include="src\plugin_info.c" />
+    <ClCompile Include="src\sound_tester.c" />
+    <ClCompile Include="src\surf3d.c" />
+    <ClCompile Include="src\tentacle3d.c" />
+    <ClCompile Include="src\v3d.c" />
+    <ClCompile Include="src\xmmx.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\drawmethods.h" />
+    <ClInclude Include="src\glb_basic.h" />
+    <ClInclude Include="src\glb_circles_visualfx.h" />
+    <ClInclude Include="src\glb_ogre3d_visualfx.h" />
+    <ClInclude Include="src\glb_visualfx.h" />
+    <ClInclude Include="src\glb_vlines_visualfx.h" />
+    <ClInclude Include="src\goom.h" />
+    <ClInclude Include="src\goom_config.h" />
+    <ClInclude Include="src\goom_config_param.h" />
+    <ClInclude Include="src\goom_filters.h" />
+    <ClInclude Include="src\goom_fx.h" />
+    <ClInclude Include="src\goom_graphic.h" />
+    <ClInclude Include="src\goom_plugin_info.h" />
+    <ClInclude Include="src\goom_tools.h" />
+    <ClInclude Include="src\goom_typedefs.h" />
+    <ClInclude Include="src\goom_visual_fx.h" />
+    <ClInclude Include="src\gstgoom.h" />
+    <ClInclude Include="src\ifs.h" />
+    <ClInclude Include="src\lines.h" />
+    <ClInclude Include="src\mathtools.h" />
+    <ClInclude Include="src\mmx.h" />
+    <ClInclude Include="src\motif_goom1.h" />
+    <ClInclude Include="src\motif_goom2.h" />
+    <ClInclude Include="src\ogre3d\FileSystemLayer.h" />
+    <ClInclude Include="src\ogre3d\FileSystemLayerImpl.h" />
+    <ClInclude Include="src\ogre3d\ParticleFX.h" />
+    <ClInclude Include="src\ogre3d\Sample.h" />
+    <ClInclude Include="src\ogre3d\SampleBrowser.h" />
+    <ClInclude Include="src\ogre3d\SampleContext.h" />
+    <ClInclude Include="src\ogre3d\SamplePlugin.h" />
+    <ClInclude Include="src\ogre3d\SdkCameraMan.h" />
+    <ClInclude Include="src\ogre3d\SdkSample.h" />
+    <ClInclude Include="src\ogre3d\SdkTrays.h" />
+    <ClInclude Include="src\ppc_drawings.h" />
+    <ClInclude Include="src\ppc_zoom_ultimate.h" />
+    <ClInclude Include="src\sound_tester.h" />
+    <ClInclude Include="src\surf3d.h" />
+    <ClInclude Include="src\tentacle3d.h" />
+    <ClInclude Include="src\v3d.h" />
+    <ClInclude Include="src\xmmx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\cpp\ogre_src_v1-7-3\Samples\Media\particle\emitted_emitter.particle" />
+    <None Include="..\..\..\..\cpp\ogre_src_v1-7-3\Samples\Media\particle\Examples-Water.particle" />
+    <None Include="..\..\..\..\cpp\ogre_src_v1-7-3\Samples\Media\particle\Examples.particle" />
+    <None Include="..\..\..\..\cpp\ogre_src_v1-7-3\Samples\Media\particle\smoke.particle" />
+    <None Include="..\bin\Debug\plugins_d.cfg" />
+    <None Include="..\bin\Debug\resources_d.cfg" />
+    <None Include="..\bin\Debug\samples_d.cfg" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0CFC4CCA-7E11-42F3-96B2-021A5B19E982}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>gstglbgoom</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\int\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\int\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GSTGLBGOOM_EXPORTS;HAVE_CONFIG_H;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../../cpp/boost_1_53_0;$(SolutionDir)../../../../cpp/ogre_src_v1-7-3/OgreMain/include;$(SolutionDir)../../../../cpp/ogre_src_v1-7-3_build/include;$(SolutionDir)../../../../cpp/ogre_src_v1-7-3/Dependencies/include/OIS;$(SolutionDir)../../../../cpp/GStreamer/v0.10.7/sdk/include;$(SolutionDir)../../../../cpp/GStreamer/v0.10.7/sdk/include/libxml2;$(SolutionDir)../../../../cpp/GStreamer/v0.10.7/sdk/include/glib-2.0;$(SolutionDir)../../../../cpp/GStreamer/v0.10.7/sdk/include/gstreamer-0.10;$(SolutionDir)../../../../cpp/GStreamer/v0.10.7/sdk/include/liboil-0.3;$(SolutionDir)../../../../cpp/gst-plugins-good-0.10.21/gst-libs;$(SolutionDir)../../../../cpp/gst-plugins-good-0.10.21/win32/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)../../../../cpp/boost_1_53_0/bin.v2/libs/atomic/build/msvc-10.0/debug/link-static/threading-multi;$(SolutionDir)../../../../cpp/GStreamer/v0.10.7/sdk/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libgstbase-0.10.lib;libgstreamer-0.10.lib;glib-2.0.lib;gobject-2.0.lib;oil-0.3.lib;D:\cpp\ogre_src_v1-7-3_build\lib\Debug\OgreMain_d.lib;D:\cpp\ogre_src_v1-7-3\Dependencies\lib\debug\OIS_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /y "$(TargetPath)" C:\gstreamer\plugins</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GSTGLBGOOM_EXPORTS;HAVE_CONFIG_H;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../../cpp/boost_1_53_0;$(SolutionDir)../../../../cpp/ogre_src_v1-7-3/OgreMain/include;$(SolutionDir)../../../../cpp/ogre_src_v1-7-3_build/include;$(SolutionDir)../../../../cpp/ogre_src_v1-7-3/Dependencies/include/OIS;$(SolutionDir)../../../../cpp/GStreamer/v0.10.7/sdk/include;$(SolutionDir)../../../../cpp/GStreamer/v0.10.7/sdk/include/libxml2;$(SolutionDir)../../../../cpp/GStreamer/v0.10.7/sdk/include/glib-2.0;$(SolutionDir)../../../../cpp/GStreamer/v0.10.7/sdk/include/gstreamer-0.10;$(SolutionDir)../../../../cpp/GStreamer/v0.10.7/sdk/include/liboil-0.3;$(SolutionDir)../../../../cpp/gst-plugins-good-0.10.21/gst-libs;$(SolutionDir)../../../../cpp/gst-plugins-good-0.10.21/win32/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>libgstbase-0.10.lib;libgstreamer-0.10.lib;glib-2.0.lib;gobject-2.0.lib;oil-0.3.lib;D:\cpp\ogre_src_v1-7-3_build\lib\Release\OgreMain.lib;D:\cpp\ogre_src_v1-7-3\Dependencies\lib\Release\OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)../../../../cpp/boost_1_53_0/bin.v2/libs/atomic/build/msvc-10.0/release/link-static/threading-multi;$(SolutionDir)../../../../cpp/GStreamer/v0.10.7/sdk/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /y "$(TargetPath)" C:\gstreamer\plugins</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gst-launch", "gst-launch\gst-launch.vcxproj", "{98522D4C-7737-40D7-A3ED-EED3E31BE0AB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gst-player", "gst-player\gst-player.vcxproj", "{B6DD0D10-BECA-407C-B78E-8E5A1E222283}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gst-plugin", "gst-template-master\gst-plugin\gst-plugin.vcxproj", "{ECFBB92B-934F-4BBE-A4E8-97041E4E4468}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gst-glbgoom", "gst-glbgoom\gst-glbgoom.vcxproj", "{0CFC4CCA-7E11-42F3-96B2-021A5B19E982}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{98522D4C-7737-40D7-A3ED-EED3E31BE0AB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{98522D4C-7737-40D7-A3ED-EED3E31BE0AB}.Debug|Win32.Build.0 = Debug|Win32
+		{98522D4C-7737-40D7-A3ED-EED3E31BE0AB}.Release|Win32.ActiveCfg = Release|Win32
+		{98522D4C-7737-40D7-A3ED-EED3E31BE0AB}.Release|Win32.Build.0 = Release|Win32
+		{B6DD0D10-BECA-407C-B78E-8E5A1E222283}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B6DD0D10-BECA-407C-B78E-8E5A1E222283}.Debug|Win32.Build.0 = Debug|Win32
+		{B6DD0D10-BECA-407C-B78E-8E5A1E222283}.Release|Win32.ActiveCfg = Release|Win32
+		{B6DD0D10-BECA-407C-B78E-8E5A1E222283}.Release|Win32.Build.0 = Release|Win32
+		{ECFBB92B-934F-4BBE-A4E8-97041E4E4468}.Debug|Win32.ActiveCfg = Debug|Win32
+		{ECFBB92B-934F-4BBE-A4E8-97041E4E4468}.Debug|Win32.Build.0 = Debug|Win32
+		{ECFBB92B-934F-4BBE-A4E8-97041E4E4468}.Release|Win32.ActiveCfg = Release|Win32
+		{ECFBB92B-934F-4BBE-A4E8-97041E4E4468}.Release|Win32.Build.0 = Release|Win32
+		{0CFC4CCA-7E11-42F3-96B2-021A5B19E982}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0CFC4CCA-7E11-42F3-96B2-021A5B19E982}.Debug|Win32.Build.0 = Debug|Win32
+		{0CFC4CCA-7E11-42F3-96B2-021A5B19E982}.Release|Win32.ActiveCfg = Release|Win32
+		{0CFC4CCA-7E11-42F3-96B2-021A5B19E982}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
