@@ -1,0 +1,84 @@
+
+* using glbgoom
+
+gst-launch --gst-plugin-path="C:\gstreamer\plugins" filesrc location="D:\\tmp\\toilet-flush-2.mp3" ! queue ! tee name=stream ! queue ! mp3parse ! ffdec_mp3 ! audioconvert ! vorbisenc ! oggmux name=mux ! decodebin name=decoder decoder. ! queue ! audioconvert ! audioresample ! autoaudiosink decoder. ! ffmpegcolorspace ! autovideosink stream. ! queue ! mp3parse ! ffdec_mp3 ! audioconvert ! queue ! glbgoom ! ffmpegcolorspace ! video/x-raw-yuv,framerate=25/1,width=320,height=240 ! theoraenc ! mux.
+
+
+--gst-plugin-path="c:\gstreamer\plugins" filesrc location="d:\\tmp\\toilet-flush-2.mp3" ! queue ! tee name=stream ! queue ! mp3parse ! ffdec_mp3 ! audioconvert ! vorbisenc ! oggmux name=mux ! decodebin name=decoder decoder. ! queue ! audioconvert ! audioresample ! autoaudiosink decoder. ! ffmpegcolorspace ! autovideosink stream. ! queue ! mp3parse ! ffdec_mp3 ! audioconvert ! queue ! glbgoom ! ffmpegcolorspace ! video/x-raw-yuv,framerate=25/1,width=320,height=240 ! theoraenc ! mux.
+
+
+
+------------------------   
+
+redirect stdout and stderr
+
+> log.txt 2>&1
+
+*** gst-launch
+
+http://docs.gstreamer.com/display/GstSDK/gst-launch
+
+-reproduce OGG sample.ogg (audio) (works!!!)
+
+gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin"  filesrc location="C:\\tmp\\sample.ogg" ! oggdemux ! vorbisdec ! audioconvert ! autoaudiosink
+
+-reproduce MP3 (works!!!)
+
+gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin" filesrc location="C:\\tmp\\Kalimba.mp3" ! mp3parse ! ffdec_mp3 ! audioconvert ! autoaudiosink
+gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin" filesrc location="C:\\tmp\\Sleep A
+way.mp3" ! mp3parse ! ffdec_mp3 ! audioconvert ! autoaudiosink
+
+- converts mp3 to ogg (audio) (works!!!)
+
+gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin" filesrc location="C:\\tmp\\Kalimba.mp3" ! queue ! tee name=stream ! queue ! mp3parse ! ffdec_mp3 ! audioconvert ! vorbisenc ! oggmux name=mux ! filesink location="C:\\tmp\\Kalimba_output.ogg"
+
+- reproduce ogg video (works!!!)
+
+gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin" -v filesrc location="C:\\tmp\\Kalimba_output_320x240.ogg" ! decodebin name=decoder decoder. ! queue ! audioconvert ! audioresample ! autoaudiosink decoder. ! ffmpegcolorspace ! autovideosink
+
+---------------------------------------
+
+- mp3 + goom -> ogg (works!!!)
+gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin" filesrc location="C:\\tmp\\Kalimba.mp3" ! queue ! tee name=stream ! queue ! mp3parse ! ffdec_mp3 ! audioconvert ! vorbisenc ! oggmux name=mux ! filesink location="C:\\tmp\\Kalimba_output_320x240.ogg" stream. ! queue ! mp3parse ! ffdec_mp3 ! audioconvert ! queue ! goom ! ffmpegcolorspace ! video/x-raw-yuv,width=320,height=240 ! theoraenc ! mux.
+
+- ogg + goom -> ogg (works!!!)
+gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin"  filesrc location="C:\\tmp\\sample.ogg" ! queue ! tee name=stream ! queue ! oggdemux ! vorbisparse ! oggmux name=mux ! filesink location="C:\\tmp\\output.ogg" stream. ! queue ! oggdemux ! vorbisdec ! audioconvert ! queue ! goom ! ffmpegcolorspace ! video/x-raw-yuv,width=1920,height=1080 ! theoraenc ! mux.
+
+gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin"  filesrc location="C:\\tmp\\sample.ogg" ! queue ! tee name=stream ! queue ! oggdemux ! vorbisparse ! oggmux name=mux ! filesink location="C:\\tmp\\sample_video_small.ogg" stream. ! queue ! oggdemux ! vorbisdec ! audioconvert ! queue ! goom ! ffmpegcolorspace ! video/x-raw-yuv,width=640,height=480 ! theoraenc ! mux.
+
+- mp3 + goom -> mkv (faltan plugins)
+gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin" filesrc location="C:\\tmp\\Kalimba.mp3" ! queue ! tee name=stream ! queue ! mp3parse ! matroskamux name=mux ! filesink location="C:\\tmp\\Kalimba_output.mkv" stream. ! queue ! mp3parse ! ffdec_mp3 ! audioconvert ! queue ! goom ! ffmpegcolorspace ! video/x-raw-yuv,width=640,height=480 ! x264enc ! mux.
+
+---------------------------------------
+- ogg + goom -> live (works!!!!!!!!!!!!!!!!)
+
+C:\tmp>gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin" filesrc location="C:\\tmp\\sample.ogg" ! queue ! tee name=stream ! queue ! oggdemux ! vorbisparse ! oggmux name=mux ! decodebin name=decoder decoder. ! queue ! audioconvert ! audioresample ! autoaudiosink decoder. ! ffmpegcolorspace ! autovideosink stream. ! queue ! oggdemux ! vorbisdec ! audioconvert ! queue ! goom ! ffmpegcolorspace ! video/x-raw-yuv,framerate=25/1,width=320,height=200 ! theoraenc ! mux.
+
+- mp3 + goom -> live (works!!!!!!!!!!!!!!!!)
+
+gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin" filesrc location="C:\\tmp\\toilet-flush-2.mp3" ! queue ! tee name=stream ! queue ! mp3parse ! ffdec_mp3 ! audioconvert ! vorbisenc ! oggmux name=mux ! decodebin name=decoder decoder. ! queue ! audioconvert ! audioresample ! autoaudiosink decoder. ! ffmpegcolorspace ! autovideosink stream. ! queue ! mp3parse ! ffdec_mp3 ! audioconvert ! queue ! goom ! ffmpegcolorspace ! video/x-raw-yuv,framerate=25/1,width=320,height=240 ! theoraenc ! mux.
+
+- debug info from goom
+
+add these
+-t -m --gst-debug=goom:9
+
+
+*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+
+--- from http://www.vidarholen.net/contents/blog/?tag=gstreamer
+*
+gst-launch filesrc location=input.mp3 ! queue ! tee name=stream ! queue ! mp3parse ! matroskamux name=mux ! filesink location="output.mkv" stream. ! queue ! mp3parse ! mad ! audioconvert ! queue ! goom ! ffmpegcolorspace ! video/x-raw-yuv,width=1280,height=720 ! x264enc ! mux.
+
+*
+gst-launch filesrc location=input.ogg ! queue ! tee name=stream ! queue ! oggdemux ! vorbisparse ! oggmux name=mux ! filesink location="output.ogg" stream. ! queue ! oggdemux ! vorbisdec ! audioconvert ! queue ! goom ! ffmpegcolorspace ! video/x-raw-yuv,width=1920,height=1080 ! theoraenc ! mux.
+
+gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin"  filesrc location="C:\\tmp\\sample.ogg" ! queue ! tee name=stream ! queue ! oggdemux ! vorbisparse ! oggmux name=mux ! filesink location="C:\\tmp\\output.ogg" stream. ! queue ! oggdemux ! vorbisdec ! audioconvert ! queue ! goom ! ffmpegcolorspace ! video/x-raw-yuv,width=1920,height=1080 ! theoraenc ! mux.
+
+
+gst-launch --gst-plugin-path="C:\Program Files\OSSBuild\GStreamer\v0.10.7\bin"  filesrc location="C:\\tmp\\sample.ogg" ! queue ! tee name=stream ! queue ! oggdemux ! vorbisparse ! oggmux name=mux ! filesink location="output.ogg"
+
+-------------
+
+XXXXXXXXXXXXXXXXXXXXXXXXXX
+
