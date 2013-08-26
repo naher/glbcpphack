@@ -53,12 +53,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\include\gstreamer-0.10\;$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\include\glib-2.0\;$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\include\libxml2\;$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\include\gstreamer-0.10\;$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\include\glib-2.0\;$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\include\libxml2\;$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>gstreamer-0.10.lib;glib-2.0.lib;gobject-2.0.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -70,14 +70,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\include\gstreamer-0.10\;$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\include\glib-2.0\;$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\include\libxml2\;$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\include\gstreamer-0.10\;$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\include\glib-2.0\;$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\include\libxml2\;$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>gstreamer-0.10.lib;glib-2.0.lib;gobject-2.0.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

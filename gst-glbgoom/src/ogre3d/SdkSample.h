@@ -98,6 +98,10 @@ namespace OgreBites
 			}
 		}
 
+		virtual Ogre::RenderTexture * const getRttTexture() {
+			return rTexture;
+		}
+
 		virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt)
 		{
 			mTrayMgr->frameRenderingQueued(evt);
@@ -522,6 +526,20 @@ namespace OgreBites
 			mCamera->setNearClipDistance(5);
 
 			mCameraMan = new SdkCameraMan(mCamera);   // create a default camera controller
+
+			// creation of a render-to-texture texture
+			Ogre::TexturePtr rtt_texture = Ogre::TextureManager::getSingleton().createManual("RttTex", 
+									Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
+									Ogre::TEX_TYPE_2D,320,240 /*mViewport->getActualWidth(), mViewport->getActualHeight()*/, 0,
+									Ogre::PF_BYTE_BGRA, Ogre::TU_RENDERTARGET);
+
+			rTexture = rtt_texture->getBuffer()->getRenderTarget();
+
+			rTexture->addViewport(mCamera);
+			rTexture->getViewport(0)->setClearEveryFrame(true);
+			rTexture->getViewport(0)->setBackgroundColour(Ogre::ColourValue::Blue);
+			rTexture->getViewport(0)->setOverlaysEnabled(false);
+
 		}
 
 		virtual void setDragLook(bool enabled)
@@ -547,6 +565,8 @@ namespace OgreBites
 		ParamsPanel* mDetailsPanel;   		// sample details panel
 		bool mCursorWasVisible;				// was cursor visible before dialog appeared
 		bool mDragLook;                     // click and drag to free-look
+
+		Ogre::RenderTexture * rTexture;		// render-to-texture texture of main viewport
     };
 }
 

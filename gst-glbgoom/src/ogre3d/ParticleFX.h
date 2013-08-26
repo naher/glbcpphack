@@ -22,7 +22,7 @@ public:
 
     bool frameRenderingQueued(const FrameEvent& evt)
     {
-		mFountainPivot->yaw(Degree(evt.timeSinceLastFrame * 30));   // spin the fountains around
+		mFountainPivot->yaw(Degree(evt.timeSinceLastFrame * 90));   // spin the fountains around
 
 		return SdkSample::frameRenderingQueued(evt);   // don't forget the parent class updates!
     }
@@ -37,18 +37,78 @@ protected:
 
 	void setupContent()
 	{
-		// setup some basic lighting for our scene
-		mSceneMgr->setAmbientLight(ColourValue(0.3, 0.3, 0.3));
-		mSceneMgr->createLight()->setPosition(20, 80, 50);
 
-		// set our camera to orbit around the origin and show cursor
+	// set up a mini screen (intermediate ogre tutorial)
+		/*Ogre::Rectangle2D *mMiniScreen = new Ogre::Rectangle2D(true);
+		mMiniScreen->setCorners(0.5f, -0.5f, 1.0f, -1.0f);
+		mMiniScreen->setBoundingBox(Ogre::AxisAlignedBox(-100000.0f * Ogre::Vector3::UNIT_SCALE, 
+															100000.0f * Ogre::Vector3::UNIT_SCALE));
+
+		Ogre::SceneNode* miniScreenNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("MiniScreenNode");
+		miniScreenNode->attachObject(mMiniScreen);
+
+		Ogre::MaterialPtr renderMaterial = Ogre::MaterialManager::getSingleton().create("RttMat", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		renderMaterial->getTechnique(0)->getPass(0)->setLightingEnabled(false);
+		renderMaterial->getTechnique(0)->getPass(0)->createTextureUnitState("RttTex");
+
+		mMiniScreen->setMaterial("RttMat");*/
+
+	// setup some basic lighting for our scene
+		mSceneMgr->setAmbientLight(ColourValue(0.3, 0.3, 0.3));
+		light = mSceneMgr->createLight();
+		light->setPosition(0, 80, 50);
+
+	// set our camera to orbit around the origin and show cursor
 		mCameraMan->setStyle(CS_ORBIT);
-		mCameraMan->setYawPitchDist(Degree(0), Degree(15), 250);
+		mCameraMan->setYawPitchDist(Degree(0), Degree(15), 550);
 		mTrayMgr->showCursor();
 
+	// Create a prefab plane
+		ManualObject* manual = mSceneMgr->createManualObject("manual");
+		manual->begin("Examples/BeachStones", RenderOperation::OT_TRIANGLE_LIST);
+ 
+		// define vertex position of index 0..3
+		manual->position(-10000.0, -100.0, 10000.0); manual->textureCoord(0.0,100.0);
+		manual->position( 10000.0, -100.0, -10000.0); manual->textureCoord(100.0,0.0);
+		manual->position(-10000.0, -100.0, -10000.0); manual->textureCoord(0.0,0.0);
+		manual->position( 10000.0, -100.0, 10000.0); manual->textureCoord(100.0,100.0);
+		manual->position( 10000.0, -100.0, -10000.0); manual->textureCoord(100.0,0.0);
+		manual->position(-10000.0, -100.0, 10000.0); manual->textureCoord(0.0,100.0);
+ 
+		manual->end();
+		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(manual);
+
+		/*Entity* planeEnt = mSceneMgr->createEntity("Plane", SceneManager::PT_PLANE);
+		SceneNode * floor = mSceneMgr->createSceneNode("Floor");
+		floor->attachObject(planeEnt);
+		floor->rotate(Ogre::Quaternion(Ogre::Radian(Ogre::Degree(-90)),Ogre::Vector3::UNIT_X));
+		floor->translate(0,-100,0);
+		floor->scale(100,100,100);
+		
+		mSceneMgr->getRootSceneNode()->addChild(floor);*/
+ 
+		// Give the plane a texture
+		//planeEnt->setMaterialName("Examples/BeachStones");
+ 
+		// Attach the 2 new entities to the root of the scene
+		//mSceneMgr->getRootSceneNode()->attachObject(floor);
+
+		// create Globant logo
+		SceneNode* nodeGlbLogo = mSceneMgr->getRootSceneNode()->createChildSceneNode("GlobantLogo");
+		Entity* glbLogo = mSceneMgr->createEntity("GlobantLogo0", "GlobantLogo.mesh");
+
+		nodeGlbLogo->attachObject(glbLogo);
+		nodeGlbLogo->setScale(30, 30, 30);
+		nodeGlbLogo->setOrientation(Ogre::Quaternion(Ogre::Radian(Ogre::Degree(90.0f)), Ogre::Vector3::UNIT_X));
+		nodeGlbLogo->setPosition(0, 40, 0);
+
 		// create an ogre head entity and place it at the origin
-        Entity* ent = mSceneMgr->createEntity("Head", "ogrehead.mesh");
-        mSceneMgr->getRootSceneNode()->attachObject(ent);
+		Entity* ogreHead = mSceneMgr->createEntity("Head", "ogrehead.mesh");
+		SceneNode * nodeOgre = mSceneMgr->getRootSceneNode()->createChildSceneNode("OgreHead");
+		nodeOgre->attachObject(ogreHead);
+		nodeOgre->setPosition(0,-50,0);
+
+		mSceneMgr->setSkyDome(true, "Examples/CloudySky", 5, 8);
 		
 		setupParticles();   // setup particles
 		setupTogglers();    // setup particle togglers
@@ -147,6 +207,7 @@ public:
 		ParticleEmitter  * psPurpleFountain2EmPoint;
 		ParticleAffector * psPurpleFountain2AfLF;
 		ParticleAffector * psPurpleFountain2AfCF;
+	Light * light;
 };
 
 #endif

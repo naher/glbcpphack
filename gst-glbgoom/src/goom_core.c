@@ -179,9 +179,9 @@ glb_goom_update (PluginInfo * goomInfo, gint16 data[2][512], int forceMode,
   evaluate_sound (data, &(goomInfo->sound));
 
   // Zoom here ! - keeping this effect by now
-  zoomFilterFastRGB (goomInfo, goomInfo->p2, goomInfo->p1, &goomInfo->update.zoomFilterData, //pzfd,
+  /*zoomFilterFastRGB (goomInfo, goomInfo->p2, goomInfo->p1, &goomInfo->update.zoomFilterData, //pzfd,
       goomInfo->screen.width, goomInfo->screen.height,
-      goomInfo->update.switchIncr, goomInfo->update.switchMult);
+      goomInfo->update.switchIncr, goomInfo->update.switchMult);*/
 
 	  /*
   // Affichage tentacule 

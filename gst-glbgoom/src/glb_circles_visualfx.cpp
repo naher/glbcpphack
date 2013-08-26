@@ -45,7 +45,7 @@ void GlbCirclesVisualFX::v_apply(Pixel *src, Pixel *dest, PluginInfo *goomInfo)
 		int const y = goom_irand (goomInfo->gRandom, goomInfo->screen.height);
 		int const r = goom_irand (goomInfo->gRandom, 15);
 
-		goomInfo->methods.draw_circle (
+		/*goomInfo->methods.draw_circle (
 				dest
 			,	x
 			,	y
@@ -53,7 +53,7 @@ void GlbCirclesVisualFX::v_apply(Pixel *src, Pixel *dest, PluginInfo *goomInfo)
 			,	color
 			,	w
 			, 	h
-			);
+			);*/
 
 	}
 

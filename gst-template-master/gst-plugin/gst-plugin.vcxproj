@@ -53,13 +53,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GSTPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../../GStreamer/v0.10.7/sdk/include;$(SolutionDir)../../../GStreamer/v0.10.7/sdk/include/libxml2;$(SolutionDir)../../../GStreamer/v0.10.7/sdk/include/glib-2.0;$(SolutionDir)../../../GStreamer/v0.10.7/sdk/include/gstreamer-0.10;$(SolutionDir)../../../GStreamer/v0.10.7/sdk/include/liboil-0.3;$(SolutionDir)/../../gst-libs;$(SolutionDir)/../common;../../../gstreamer;../../../gstreamer/libs;../../../gst-plugins-base/gst-libs;../../../gstreamer/win32/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/libxml2;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/glib-2.0;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/gstreamer-0.10;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/liboil-0.3;$(SolutionDir)/../../gst-libs;$(SolutionDir)/../common;../../../gstreamer;../../../gstreamer/libs;../../../gst-plugins-base/gst-libs;../../../gstreamer/win32/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>gstreamer-0.10.lib;glib-2.0.lib;gobject-2.0.lib;gstaudio-0.10.lib;gstbase-0.10.lib;gstcontroller-0.10.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ForceFileOutput>Enabled</ForceFileOutput>
     </Link>
   </ItemDefinitionGroup>
@@ -71,7 +71,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GSTPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\include\gstreamer-0.10\;$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\include\glib-2.0\;$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\include\libxml2\;$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\include\gstreamer-0.10\;$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\include\glib-2.0\;$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\include\libxml2\;$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -79,7 +79,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>gstreamer-0.10.lib;glib-2.0.lib;gobject-2.0.lib;gstaudio-0.10.lib;gstbase-0.10.lib;gstcontroller-0.10.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\..\..\..\dev\libs\GStreamer\v0.10.7\sdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\deps\GStreamer\v0.10.7\sdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ForceFileOutput>Enabled</ForceFileOutput>
     </Link>
   </ItemDefinitionGroup>
