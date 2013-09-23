@@ -67,6 +67,11 @@ struct _SOUND_INFO {
 	int totalgoom;    /* number of goom since last reset
 			   * (a reset every 64 cycles) */
 
+	/* custom additions to SoundInfo structure */
+	float speedAvg; /* average speed of the last N samples (N=200) */
+	float accelAvg; /* average accel of the last N samples (N=200) */
+	float volumeAvg; /* average volume of the last N samples (N=200) */
+
 	float prov_max;   /* accel max since last reset */
 
 	int cycle;

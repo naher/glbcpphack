@@ -42,6 +42,9 @@
 #include "gstgoom.h"
 #include <gst/video/video.h>
 #include "goom.h"
+#include "gstspectrum.c"
+
+#include "C:/Users/pablo.rubi/cpp/glbcpphack/gst_glbspectrum/src/spectrumshared.h"
 
 #include <liboil/liboil.h>
 
@@ -176,6 +179,11 @@ gst_goom_init (GstGoom * goom)
 
   goom->adapter = gst_adapter_new ();
 
+  // Custom code to add spectrum to goom
+  /*gstSpectrum = (GstSpectrum *)malloc(sizeof(GstSpectrum));
+  spectrum_init(gstSpectrum);
+  gstSpectrum->adapter = goom->adapter;*/
+
   goom->width = 320;
   goom->height = 200;
   goom->fps_n = 25;             /* desired frame rate */
@@ -185,6 +193,7 @@ gst_goom_init (GstGoom * goom)
   goom->duration = 0;
 
   goom->plugin = goom_init (goom->width, goom->height);
+
 }
 
 static void
@@ -414,6 +423,23 @@ get_buffer (GstGoom * goom, GstBuffer ** outbuf)
   return GST_FLOW_OK;
 }
 
+static void
+print_spectrum_message (GstSpectrum * spectrum) {
+	guint i;
+	if (spectrum->message_magnitude) {
+		for (i = 0; i < spectrum->bands; i++) {
+			printf("%f ",spectrum->spect_magnitude[i]);
+		}
+		printf("\n");
+	}
+
+	if (spectrum->message_phase) {
+		for (i = 0; i < spectrum->bands; i++) {
+			printf("%f ",spectrum->spect_phase[i]);
+		}
+  }
+}
+
 static GstFlowReturn
 gst_goom_chain (GstPad * pad, GstBuffer * buffer)
 {
@@ -422,7 +448,7 @@ gst_goom_chain (GstPad * pad, GstBuffer * buffer)
   GstBuffer *outbuf = NULL;
 
   goom = GST_GOOM (gst_pad_get_parent (pad));
-
+    
   /* If we don't have an output format yet, preallocate a buffer to try and
    * set one */
   if (GST_PAD_CAPS (goom->srcpad) == NULL) {
@@ -432,7 +458,7 @@ gst_goom_chain (GstPad * pad, GstBuffer * buffer)
       goto beach;
     }
   }
-
+  
   /* don't try to combine samples from discont buffer */
   if (GST_BUFFER_FLAG_IS_SET (buffer, GST_BUFFER_FLAG_DISCONT)) {
     gst_adapter_clear (goom->adapter);
@@ -456,8 +482,10 @@ gst_goom_chain (GstPad * pad, GstBuffer * buffer)
     const guint16 *data;
     gboolean need_skip;
     guchar *out_frame;
-    gint i;
+    gint i, c;
     guint avail, to_flush;
+	
+	Message m;
 
     avail = gst_adapter_available (goom->adapter);
     GST_DEBUG_OBJECT (goom, "avail now %u", avail);
@@ -520,6 +548,22 @@ gst_goom_chain (GstPad * pad, GstBuffer * buffer)
     GST_BUFFER_TIMESTAMP (outbuf) = goom->next_ts;
     GST_BUFFER_DURATION (outbuf) = goom->duration;
     GST_BUFFER_SIZE (outbuf) = goom->outsize;
+
+	//gst_spectrum_transform_ip(gstSpectrum,buffer);
+
+	//print_spectrum_message(gstSpectrum);
+	//readMessage(&m);
+
+	//c = m.magnitude[0] + m.magnitude[1] + m.magnitude[2] + m.magnitude[3] + m.magnitude[4];
+	//if (c != 0) {
+		/*printf("\n\n [");
+		for (i = 0; i < 5; i++)
+			printf("%f $ ", m.magnitude[i]);
+		printf("] \n\n");*/
+		
+		/*g_print ("Goom: %" GST_TIME_FORMAT ", message received: %" GST_TIME_FORMAT "\n",
+			GST_TIME_ARGS (goom->next_ts), GST_TIME_ARGS (m.timestamp));*/
+	//}
 
     out_frame = (guchar *) goom_update (goom->plugin, goom->datain, 0, 0);
     memcpy (GST_BUFFER_DATA (outbuf), out_frame, goom->outsize);

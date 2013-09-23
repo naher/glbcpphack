@@ -4,6 +4,10 @@
 #include "goom_config.h"
 #include "goom_plugin_info.h"
 #include "glb_ogre3d_visualfx.h"
+#include "ColorPEAffector.h"
+#include "VelocityPEAffector.h"
+#include "GoomPEAffector.h"
+#include "spectrumshared.h"
 
 #include <boost/atomic.hpp>
 
@@ -60,6 +64,7 @@ namespace {
 	std::deque<double> speeds, accels, volumes;
 	Pixel * pixelBuffer1, * pixelBuffer2; // for doublebuffering
 	bool buffer1Active;
+	glb_ogre::ParticleEmitterAffector * fountainColorAffector, * fountainVelAffector, * fountainGoomAffector;
 
 	void updateLights(SoundInfo soundInfo, Ogre::Light * light) {
 		Ogre::Vector3 lightPos(light->getPosition());
@@ -69,99 +74,104 @@ namespace {
 		light->setPosition(lightPos);
 	}
 
-	void updateFireworks(SoundInfo soundInfo, Ogre::ParticleSystem * fwSystem) {
-		ParticleEmitter * fwEmBox = fwSystem->getEmitter(0);
-		if (soundInfo.timeSinceLastGoom < 3) {
-			fwEmBox->setEmissionRate(soundInfo.goomPower*10);
-			fwEmBox->setParticleVelocity(soundInfo.goomPower*500);
-		} else {
-			fwEmBox->setEmissionRate(0);
-		}
-	}
-
-	void updateFountains(SoundInfo soundInfo, Ogre::ParticleSystem * fountain1, Ogre::ParticleSystem * fountain2) {
-		Ogre::ParticleEmitter * emitterF1 = fountain1->getEmitter(0);
-		Ogre::ParticleEmitter * emitterF2 = fountain2->getEmitter(0);
-
-		emitterF1->setEmissionRate(300);
-		emitterF2->setEmissionRate(300);
-
-		double acceleration = /*soundInfo.accelvar - accelAvg;*/ soundInfo.accelvar / (accelAvgN+0.000001);
-		double speed = /*soundInfo.speedvar - speedAvg;*/ soundInfo.speedvar / (speedAvgN+0.000001);
-		double volume = /*soundInfo.volume - volumeAvg;*/ soundInfo.volume / (volumeAvgN+0.000001);
+	/**
+	* Inits ogre's thread structures.
+	*/
+	void setupOgreThread(ogre_thread_data & data) {
+		data.fxdata.sample_browser.goStartRendering(&data.fxdata.sample);
 		
-		Ogre::Real partVel = 0;
-		partVel = 70 + volume*4 + speed*8 + speed*acceleration*acceleration*20;
+		// get shared memory stored by spectrum
+	    useSharedMem();
+	    // Signals spectrum
+	    setInit(1);
+				
+		// Initialize affectors
+		fountainColorAffector = new glb_ogre::ColorPEAffector();
+		fountainVelAffector = new glb_ogre::VelocityPEAffector();
+		fountainGoomAffector = new glb_ogre::GoomPEAffector();
+		
+		data.fxdata.sample.psFireworksEmBox->setMinParticleVelocity(150);
 
-		if (soundInfo.goomPower*10 > 1 && soundInfo.timeSinceLastGoom > 10) {
-			colorSwitch < 2 ? colorSwitch++ : colorSwitch = 0;
-		}
-		//ColourValue colorV(soundInfo.speedvar*12-0.2,soundInfo.speedvar*12-0.2,1);
-		ColourValue colorV;
-		switch (colorSwitch) {
-			case 0:	colorV = *(new ColourValue(1-speed/3, 1-acceleration/3, 1-volume/2-acceleration/6));
-			break;
-			case 1:	colorV = *(new ColourValue(1-acceleration/3, 1-speed/3, 1-volume/2-acceleration/6));
-			break;
-			case 2:	colorV = *(new ColourValue(1-volume/2-acceleration/6, 1-acceleration/3-speed/6, 1-speed/3));
-			break;
-		}
-		emitterF1->setColour(colorV);
-		emitterF2->setColour(colorV);
-		if (partVel > 280) partVel = 280;
-		emitterF1->setParticleVelocity(partVel);
-		emitterF2->setParticleVelocity(partVel);
-		emitterF1->setTimeToLive(partVel/76);
-		emitterF2->setTimeToLive(partVel/76);
-	}
-
-	void updateAureola(SoundInfo soundInfo, Ogre::ParticleSystem * aureola) {
-
-	}
-
-	void updateNimbus(SoundInfo soundInfo, Ogre::ParticleSystem * nimbus) {
-	}
-
-	void updateRain(SoundInfo soundInfo, Ogre::ParticleSystem * rainSystem) {
-
-	}
-
-	static gpointer
-	service_thread_func (gpointer user_data)
-	{
-		ogre_thread_data & data = *((ogre_thread_data *) user_data);
-
-		GlbOgre3DVisualFXData & r_data = data.fxdata;
-		r_data.sample_browser.goStartRendering(&r_data.sample);
+		// Initialize avg aux variables
+		speedTotal = 0, speedAvg = 0.00001, speedTotalN = 0, speedAvgN = 0.00001; 
+		accelTotal = 0, accelAvg = 0.00001, accelTotalN = 0, accelAvgN = 0.00001;
+		volumeTotal = 0, volumeAvg = 0.00001, volumeTotalN = 0, volumeAvgN = 0.00001;
+		sampleCount = 0, n = 200, colorSwitch = 0;
 
 		// notify ogre was initialized
 		g_mutex_lock (data.data_mutex);
 		data.initialized = true;
 		g_cond_signal (data.data_cond);
 		g_mutex_unlock (data.data_mutex);
+	}
 
-		int updateCycle = 2, cycleCount = 0;
+	/**
+	* Calculates averages for every update cycle.
+	*/
+	void calculateAvgs(SoundInfo & soundInfo) {
+		// Averages (not used by the Particle Emitter Affectors now)
+		sampleCount++;
+		speedTotal += soundInfo.speedvar;
+		speedAvg = speedTotal / sampleCount;
+		accelTotal += soundInfo.accelvar;
+		accelAvg = accelTotal / sampleCount;
+		volumeTotal += soundInfo.volume;
+		volumeAvg = volumeTotal / sampleCount;
 
-		printf ("soundInfo.speedvar, soundInfo.timeSinceLastGoom, soundInfo.goomPower, soundInfo.accelvar, soundInfo.volume, \n");
+		// Next values are averages within a fixed sized window of size n
+		speedTotalN += soundInfo.speedvar;
+		accelTotalN += soundInfo.accelvar;
+		volumeTotalN += soundInfo.volume;
 
-		//data.fxdata.sample.psPurpleFountain1EmPoint->setMaxParticleVelocity(400);
-		//data.fxdata.sample.psPurpleFountain2EmPoint->setMaxParticleVelocity(400);
-		data.fxdata.sample.psFireworksEmBox->setMinParticleVelocity(150);
+		speeds.push_back(soundInfo.speedvar);
+		accels.push_back(soundInfo.accelvar);
+		volumes.push_back(soundInfo.volume);
+		if (speeds.size() > n) { // window reached its max size
+			speedTotalN -= *speeds.begin();
+			speeds.pop_front();
+			accelTotalN -= *accels.begin();
+			accels.pop_front();
+			volumeTotalN -= *volumes.begin();
+			volumes.pop_front();
+		}
+		soundInfo.speedAvg = speedAvgN = speedTotalN / speeds.size();
+		soundInfo.accelAvg = accelAvgN = accelTotalN / accels.size();
+		soundInfo.volumeAvg = volumeAvgN = volumeTotalN / volumes.size();
+	}
 
-		speedTotal = 0, speedAvg = 0.00001, speedTotalN = 0, speedAvgN = 0.00001; 
-		accelTotal = 0, accelAvg = 0.00001, accelTotalN = 0, accelAvgN = 0.00001;
-		volumeTotal = 0, volumeAvg = 0.00001, volumeTotalN = 0, volumeAvgN = 0.00001;
-		sampleCount = 0, n = 200, colorSwitch = 0;
+	/**
+	* Unloads resources requested at startup.
+	*/
+	void stopOgreThread(ogre_thread_data & data) {
+		data.fxdata.sample_browser.goStopRendering();
 
+		delete fountainColorAffector;
+		fountainColorAffector = NULL;
+		delete fountainVelAffector;
+		fountainVelAffector = NULL;
+		delete fountainGoomAffector;
+		fountainGoomAffector = NULL;
+	}
+
+	static gpointer
+	service_thread_func (gpointer user_data)
+	{
+		ogre_thread_data & data = *((ogre_thread_data *) user_data);
+		GlbOgre3DVisualFXData & r_data = data.fxdata;
+		
+		setupOgreThread(data);
+		
 		std::ofstream logFile;
 		logFile.open("logCSV.txt");
-
+		
 		// render loop
+		int updateCycle = 2, cycleCount = 0;
 		while (!data.exit.load(boost::memory_order_relaxed)) {
 			
 			if (!(cycleCount--)) {
 				
-				if (pixelBuffer1 != NULL && pixelBuffer2 != NULL) {
+				// Handle double buffering
+				if (pixelBuffer1 != NULL && pixelBuffer2 != NULL) { // both buffers are initialized
 					Ogre::RenderTexture & rTexture = *(r_data.sample.getRttTexture());
 	
 					Ogre::PixelBox pixelBox(rTexture.getWidth(), rTexture.getHeight(), 1, 
@@ -169,7 +179,7 @@ namespace {
 
 					rTexture.copyContentsToMemory(pixelBox, Ogre::RenderTarget::FrameBuffer::FB_AUTO);
 
-					buffer1Active ^= true;
+					buffer1Active ^= true; // swap active buffer
 				}
 
 				cycleCount = updateCycle;
@@ -178,35 +188,10 @@ namespace {
 				// -- not locking yet until we test it
 				// ogre_thread_data::scoped_lock(data.data_mutex);
 				SoundInfo & soundInfo = data.info.sound;
+				Message m;
+				readMessage(&m);
 
-			// Averages
-				sampleCount++;
-				speedTotal += soundInfo.speedvar;
-				speedAvg = speedTotal / sampleCount;
-				accelTotal += soundInfo.accelvar;
-				accelAvg = accelTotal / sampleCount;
-				volumeTotal += soundInfo.volume;
-				volumeAvg = volumeTotal / sampleCount;
-
-			// Next values are averages within a fixed sized window of size n
-				speedTotalN += soundInfo.speedvar;
-				accelTotalN += soundInfo.accelvar;
-				volumeTotalN += soundInfo.volume;
-
-				speeds.push_back(soundInfo.speedvar);
-				accels.push_back(soundInfo.accelvar);
-				volumes.push_back(soundInfo.volume);
-				if (speeds.size() > n) { // window reached its max size
-					speedTotalN -= *speeds.begin();
-					speeds.pop_front();
-					accelTotalN -= *accels.begin();
-					accels.pop_front();
-					volumeTotalN -= *volumes.begin();
-					volumes.pop_front();
-				}
-				speedAvgN = speedTotalN / speeds.size();
-				accelAvgN = accelTotalN / accels.size();
-				volumeAvgN = volumeTotalN / volumes.size();
+				calculateAvgs(data.info.sound);
 
 				/*printf ("%f, %d, %f, %f, %f \n", 
 					soundInfo.speedvar, soundInfo.timeSinceLastGoom, soundInfo.goomPower, soundInfo.accelvar, soundInfo.volume);*/
@@ -218,20 +203,29 @@ namespace {
 						<< speedAvgN << ","
 						<< accelAvgN << '\n';
 
-			// Update functions
-				updateLights(soundInfo, data.fxdata.sample.light);
-				updateFireworks(soundInfo, data.fxdata.sample.psFireworks);
-				updateFountains(soundInfo, data.fxdata.sample.psPurpleFountain1, data.fxdata.sample.psPurpleFountain2);
-				updateAureola(soundInfo, data.fxdata.sample.psAureola);
-				updateNimbus(soundInfo, data.fxdata.sample.psGreenyNimbus);
-				updateRain(soundInfo, data.fxdata.sample.psRain);
+				data.fxdata.sample.cameraHRotationSpeed = 2 + soundInfo.speedvar*15 + soundInfo.accelvar*60;
 
+			// Call update functions for every particle emitter affector
+				for (int i = 0; i < r_data.sample.emitters_affectors.size(); i++) {
+					Ogre::ParticleEmitter * pEmitter = r_data.sample.emitters_affectors[i].first;
+					glb_ogre::ParticleEmitterAffector_vector & affectors = r_data.sample.emitters_affectors[i].second;
+					for_each(affectors.begin(), affectors.end(), 
+						boost::bind(&glb_ogre::ParticleEmitterAffector::_updateEmitter, 
+							boost::bind(&glb_ogre::ParticleEmitterAffector_ptr::get, _1), pEmitter, &soundInfo, &m));
+					//for (int j = 0; j < affectors.size(); j++)
+					//	affectors[j]->_updateEmitter(pEmitter, &soundInfo, &m);
+				}
+
+				updateLights(soundInfo, r_data.sample.light);
 			}
 
 			r_data.sample_browser.goRenderOneFrame();
 		}
-		r_data.sample_browser.goStopRendering();
+
 		logFile.close();
+		
+		stopOgreThread(data);
+
 		return NULL;
 	}
 
@@ -284,7 +278,6 @@ void GlbOgre3DVisualFX::v_apply(Pixel *src, Pixel *dest, PluginInfo *goomInfo)
 		pixelBuffer1 = dest;
 	else if (dest != pixelBuffer1 && pixelBuffer2 == NULL)
 		pixelBuffer2 = dest;
-
 }
 
 }

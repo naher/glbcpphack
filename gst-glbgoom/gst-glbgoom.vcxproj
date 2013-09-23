@@ -11,42 +11,57 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\gst_glbspectrum\src\spectrumshared.cpp" />
+    <ClCompile Include="src\ColorBandPEAffector.cpp" />
+    <ClCompile Include="src\CompositePEAffector.cpp" />
     <ClCompile Include="src\config_param.c" />
     <ClCompile Include="src\convolve_fx.c" />
     <ClCompile Include="src\drawmethods.c" />
     <ClCompile Include="src\filters.c" />
     <ClCompile Include="src\flying_stars_fx.c" />
+    <ClCompile Include="src\ColorPEAffector.cpp" />
     <ClCompile Include="src\glb_basic.cpp" />
     <ClCompile Include="src\glb_circles_visualfx.cpp" />
     <ClCompile Include="src\glb_ogre3d_visualfx.cpp" />
     <ClCompile Include="src\glb_visualfx.cpp" />
     <ClCompile Include="src\glb_vlines_visualfx.cpp" />
+    <ClCompile Include="src\GoomPEAffector.cpp" />
     <ClCompile Include="src\goom_core.c" />
     <ClCompile Include="src\goom_tools.c" />
     <ClCompile Include="src\graphic.c" />
     <ClCompile Include="src\gstgoom.c" />
+    <ClCompile Include="src\gstspectrum.c" />
     <ClCompile Include="src\ifs.c" />
     <ClCompile Include="src\lines.c" />
+    <ClCompile Include="src\LowToHighPSFactory.cpp" />
     <ClCompile Include="src\mathtools.c" />
+    <ClCompile Include="src\RandomPSFactory.cpp" />
     <ClCompile Include="src\mmx.c" />
     <ClCompile Include="src\ogre3d\FileSystemLayerImpl_WIN32.cpp" />
     <ClCompile Include="src\ogre3d\ParticleFX.cpp" />
     <ClCompile Include="src\ogre3d\SampleBrowser.cpp" />
+    <ClCompile Include="src\ParticleSystemFactory.cpp" />
     <ClCompile Include="src\plugin_info.c" />
     <ClCompile Include="src\sound_tester.c" />
     <ClCompile Include="src\surf3d.c" />
     <ClCompile Include="src\tentacle3d.c" />
     <ClCompile Include="src\v3d.c" />
+    <ClCompile Include="src\VelocityPEAffector.cpp" />
     <ClCompile Include="src\xmmx.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\gst_glbspectrum\src\spectrumshared.h" />
+    <ClInclude Include="src\ColorBandPEAffector.h" />
+    <ClInclude Include="src\CompositePEAffector.h" />
     <ClInclude Include="src\drawmethods.h" />
+    <ClInclude Include="src\ColorPEAffector.h" />
     <ClInclude Include="src\glb_basic.h" />
     <ClInclude Include="src\glb_circles_visualfx.h" />
     <ClInclude Include="src\glb_ogre3d_visualfx.h" />
     <ClInclude Include="src\glb_visualfx.h" />
     <ClInclude Include="src\glb_vlines_visualfx.h" />
     <ClInclude Include="src\goom.h" />
+    <ClInclude Include="src\GoomPEAffector.h" />
     <ClInclude Include="src\goom_config.h" />
     <ClInclude Include="src\goom_config_param.h" />
     <ClInclude Include="src\goom_filters.h" />
@@ -57,9 +72,12 @@
     <ClInclude Include="src\goom_typedefs.h" />
     <ClInclude Include="src\goom_visual_fx.h" />
     <ClInclude Include="src\gstgoom.h" />
+    <ClInclude Include="src\gstspectrum.h" />
     <ClInclude Include="src\ifs.h" />
     <ClInclude Include="src\lines.h" />
+    <ClInclude Include="src\LowToHighPSFactory.h" />
     <ClInclude Include="src\mathtools.h" />
+    <ClInclude Include="src\RandomPSFactory.h" />
     <ClInclude Include="src\mmx.h" />
     <ClInclude Include="src\motif_goom1.h" />
     <ClInclude Include="src\motif_goom2.h" />
@@ -73,12 +91,15 @@
     <ClInclude Include="src\ogre3d\SdkCameraMan.h" />
     <ClInclude Include="src\ogre3d\SdkSample.h" />
     <ClInclude Include="src\ogre3d\SdkTrays.h" />
+    <ClInclude Include="src\ParticleEmitterAffector.h" />
+    <ClInclude Include="src\ParticleSystemFactory.h" />
     <ClInclude Include="src\ppc_drawings.h" />
     <ClInclude Include="src\ppc_zoom_ultimate.h" />
     <ClInclude Include="src\sound_tester.h" />
     <ClInclude Include="src\surf3d.h" />
     <ClInclude Include="src\tentacle3d.h" />
     <ClInclude Include="src\v3d.h" />
+    <ClInclude Include="src\VelocityPEAffector.h" />
     <ClInclude Include="src\xmmx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -133,13 +154,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GSTGLBGOOM_EXPORTS;HAVE_CONFIG_H;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../deps/boost_1_53_0;$(SolutionDir)../deps/ogre_src_v1-7-3/OgreMain/include;$(SolutionDir)../deps/ogre_src_v1-7-3_build/include;$(SolutionDir)../deps/ogre_src_v1-7-3/Dependencies/include/OIS;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/libxml2;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/glib-2.0;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/gstreamer-0.10;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/liboil-0.3;$(SolutionDir)../deps/gst-plugins-good-0.10.21/gst-libs;$(SolutionDir)../deps/gst-plugins-good-0.10.21/win32/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../deps/boost_1_53_0;$(SolutionDir)../deps/ogre_src_v1-7-3/OgreMain/include;$(SolutionDir)../deps/ogre_src_v1-7-3_build/include;$(SolutionDir)../deps/ogre_src_v1-7-3/Dependencies/include/OIS;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/libxml2;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/glib-2.0;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/gstreamer-0.10;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/liboil-0.3;$(SolutionDir)../deps/gst-plugins-good-0.10.21/gst-libs;$(SolutionDir)../deps/gst-plugins-good-0.10.21/win32/common;C:\Users\pablo.rubi\cpp\glbcpphack\gst_glbspectrum\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)../deps/boost-libs;$(SolutionDir)../deps/ogre_src_v1-7-3_build/lib/Debug;$(SolutionDir)../deps/ogre_src_v1-7-3/Dependencies/lib/Debug;$(SolutionDir)../deps/boost_1_53_0/bin.v2/libs/thread/build/msvc-10.0/debug/link-static/threading-multi;$(SolutionDir)../deps/boost_1_53_0/bin.v2/libs/atomic/build/msvc-10.0/debug/link-static/threading-multi;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libgstbase-0.10.lib;libgstreamer-0.10.lib;glib-2.0.lib;gobject-2.0.lib;oil-0.3.lib;OgreMain_d.lib;OIS_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libgstbase-0.10.lib;libgstreamer-0.10.lib;gstfft-0.10.lib;gstaudio-0.10.lib;glib-2.0.lib;gobject-2.0.lib;oil-0.3.lib;OgreMain_d.lib;OIS_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy /y "$(TargetPath)" C:\gstreamer\plugins</Command>

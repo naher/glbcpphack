@@ -8,6 +8,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gst-plugin", "gst-template-master\gst-plugin\gst-plugin.vcxproj", "{ECFBB92B-934F-4BBE-A4E8-97041E4E4468}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gst-glbgoom", "gst-glbgoom\gst-glbgoom.vcxproj", "{0CFC4CCA-7E11-42F3-96B2-021A5B19E982}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CD20524B-5AAE-4026-8CA4-EC6A5150215E} = {CD20524B-5AAE-4026-8CA4-EC6A5150215E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gst-glbspectrum", "gst_glbspectrum\gst_glbspectrum.vcxproj", "{CD20524B-5AAE-4026-8CA4-EC6A5150215E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +36,10 @@ Global
 		{0CFC4CCA-7E11-42F3-96B2-021A5B19E982}.Debug|Win32.Build.0 = Debug|Win32
 		{0CFC4CCA-7E11-42F3-96B2-021A5B19E982}.Release|Win32.ActiveCfg = Release|Win32
 		{0CFC4CCA-7E11-42F3-96B2-021A5B19E982}.Release|Win32.Build.0 = Release|Win32
+		{CD20524B-5AAE-4026-8CA4-EC6A5150215E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CD20524B-5AAE-4026-8CA4-EC6A5150215E}.Debug|Win32.Build.0 = Debug|Win32
+		{CD20524B-5AAE-4026-8CA4-EC6A5150215E}.Release|Win32.ActiveCfg = Release|Win32
+		{CD20524B-5AAE-4026-8CA4-EC6A5150215E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,13 @@
 #define __ParticleFX_H__
 
 #include "SdkSample.h"
+#include "../LowToHighPSFactory.h"
+#include "../RandomPSFactory.h"
+
+#include "../ColorPEAffector.h"
+#include "../ColorBandPEAffector.h"
+#include "../VelocityPEAffector.h"
+#include "../GoomPEAffector.h"
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -24,6 +31,11 @@ public:
     {
 		mFountainPivot->yaw(Degree(evt.timeSinceLastFrame * 90));   // spin the fountains around
 
+		// rotate camera
+		/*mCameraMan->setYawPitchDist(Degree(cameraPositionX), Degree(cameraPositionY), cameraDistance);
+		cameraPositionX += evt.timeSinceLastFrame * cameraHRotationSpeed;
+		cameraPositionY += evt.timeSinceLastFrame * cameraVRotationSpeed;*/
+
 		return SdkSample::frameRenderingQueued(evt);   // don't forget the parent class updates!
     }
 
@@ -35,8 +47,13 @@ public:
 
 protected:
 
+	float cameraPositionX, cameraPositionY;
+
 	void setupContent()
 	{
+	// set camera initial positions
+		cameraPositionX = 0; cameraPositionY = 20; cameraDistance = 550;
+		cameraHRotationSpeed = 0; cameraVRotationSpeed = 0;
 
 	// set up a mini screen (intermediate ogre tutorial)
 		/*Ogre::Rectangle2D *mMiniScreen = new Ogre::Rectangle2D(true);
@@ -93,7 +110,7 @@ protected:
 		// Attach the 2 new entities to the root of the scene
 		//mSceneMgr->getRootSceneNode()->attachObject(floor);
 
-		// create Globant logo
+	// create Globant logo
 		SceneNode* nodeGlbLogo = mSceneMgr->getRootSceneNode()->createChildSceneNode("GlobantLogo");
 		Entity* glbLogo = mSceneMgr->createEntity("GlobantLogo0", "GlobantLogo.mesh");
 
@@ -102,7 +119,7 @@ protected:
 		nodeGlbLogo->setOrientation(Ogre::Quaternion(Ogre::Radian(Ogre::Degree(90.0f)), Ogre::Vector3::UNIT_X));
 		nodeGlbLogo->setPosition(0, 40, 0);
 
-		// create an ogre head entity and place it at the origin
+	// create an ogre head entity
 		Entity* ogreHead = mSceneMgr->createEntity("Head", "ogrehead.mesh");
 		SceneNode * nodeOgre = mSceneMgr->getRootSceneNode()->createChildSceneNode("OgreHead");
 		nodeOgre->attachObject(ogreHead);
@@ -129,11 +146,27 @@ protected:
 		mSceneMgr->getRootSceneNode()->attachObject(ps);
 
         // create a green nimbus around the ogre head
-        psGreenyNimbus = ps = mSceneMgr->createParticleSystem("Nimbus", "Examples/GreenyNimbus");
+		//glb_ogre::ParticleSystemFactory * psFactory = new glb_ogre::LowToHighPSFactory(mSceneMgr,"Examples/GreenyNimbus",6);
+		glb_ogre::ParticleSystemFactory * psFactory = new glb_ogre::RandomPSFactory(mSceneMgr,"Examples/GreenyNimbus",6, 700, 700);
+		
+		glb_ogre::ParticleEmitterAffector_vector affectors;
+
+		//affectors.push_back(glb_ogre::ParticleEmitterAffector_ptr(new glb_ogre::ColorPEAffector()));
+			
+		for (int i = 0; i < 6; i++) {
+			affectors.clear();
+			affectors.push_back(glb_ogre::ParticleEmitterAffector_ptr(
+				new glb_ogre::ColorBandPEAffector(i%2, (float)(i%4)/6, (float)(i%3)/6, (float)(i%2)/6, -46)));
+				//new glb_ogre::ColorPEAffector()));
+			emitters_affectors.push_back(
+				std::make_pair(psFactory->createInstance("Nimbus"+i, i)->getEmitter(0), affectors));
+		}
+
+        /*psGreenyNimbus = ps = mSceneMgr->createParticleSystem("Nimbus", "Examples/GreenyNimbus");
 			psGreenyNimbusEmBox = ps->getEmitter(0);
 			psGreenyNimbusAfLF;
 			psGreenyNimbusAfCF;
-		mSceneMgr->getRootSceneNode()->attachObject(ps);
+		mSceneMgr->getRootSceneNode()->attachObject(ps);*/
        
         psRain = ps = mSceneMgr->createParticleSystem("Rain", "Examples/Rain");  // create a rainstorm
         ps->fastForward(5);   // fast-forward the rain so it looks more natural
@@ -165,6 +198,18 @@ protected:
 			psPurpleFountain2AfCF;
         // attach the fountain to a child node of the pivot at a distance and angle
 		mFountainPivot->createChildSceneNode(Vector3(-200, -100, 0), Quaternion(Degree(-20), Vector3::UNIT_Z))->attachObject(ps);
+
+		// Initialize affectors
+		affectors.clear();
+		affectors.push_back(glb_ogre::ParticleEmitterAffector_ptr(new glb_ogre::ColorBandPEAffector(5, 1, 1, 1, 30)));
+		affectors.push_back(glb_ogre::ParticleEmitterAffector_ptr(new glb_ogre::VelocityPEAffector));
+		emitters_affectors.push_back(std::make_pair(psPurpleFountain1->getEmitter(0), affectors));
+		emitters_affectors.push_back(std::make_pair(psPurpleFountain2->getEmitter(0), affectors));
+
+		affectors.clear();
+		affectors.push_back(glb_ogre::ParticleEmitterAffector_ptr(new glb_ogre::GoomPEAffector));
+		emitters_affectors.push_back(std::make_pair(psFireworks->getEmitter(0), affectors));
+
 	}
 
 	void setupTogglers()
@@ -175,7 +220,7 @@ protected:
 		mTrayMgr->createCheckBox(TL_TOPLEFT, "Fountain1", "Fountain A", 130)->setChecked(true);
 		mTrayMgr->createCheckBox(TL_TOPLEFT, "Fountain2", "Fountain B", 130)->setChecked(true);
 		mTrayMgr->createCheckBox(TL_TOPLEFT, "Aureola", "Aureola", 130)->setChecked(false);
-		mTrayMgr->createCheckBox(TL_TOPLEFT, "Nimbus", "Nimbus", 130)->setChecked(false);
+		mTrayMgr->createCheckBox(TL_TOPLEFT, "Nimbus", "Nimbus", 130)->setChecked(true);
 		mTrayMgr->createCheckBox(TL_TOPLEFT, "Rain", "Rain", 130)->setChecked(false);
 	}
 
@@ -208,6 +253,8 @@ public:
 		ParticleAffector * psPurpleFountain2AfLF;
 		ParticleAffector * psPurpleFountain2AfCF;
 	Light * light;
+	float cameraHRotationSpeed, cameraVRotationSpeed, cameraDistance;
+	glb_ogre::EmitterAffectors_vector emitters_affectors;
 };
 
 #endif
