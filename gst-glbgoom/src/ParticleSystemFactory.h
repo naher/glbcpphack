@@ -5,11 +5,20 @@
 
 namespace glb_ogre {
 
+/**
+* This class allows a fast aand easy creation of several particle systems.
+*/
 class ParticleSystemFactory
 {
 public:
+	/**
+	* Constructor.
+	* sceneManager: The Ogre3D scene manager. Usually accesible through Ogre's root.
+	* templateName: allowed names are found in Resources/Samples/Media/particle/Examples.particle
+	* totalBands: number of frequency bands used to allocate particle systems in space.
+	*/
 	ParticleSystemFactory(Ogre::SceneManager * sceneManager, const char * templateName, int totalBands);
-	~ParticleSystemFactory(void);
+	virtual ~ParticleSystemFactory(void);
 
 	/**
 	* Creates an instance of a Particle System. Adds a node with the same name to the scene's root node.

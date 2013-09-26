@@ -14,7 +14,7 @@ class ParticleEmitterAffector
 {
 public:
 	ParticleEmitterAffector(void) {};
-	~ParticleEmitterAffector(void) {};
+	virtual ~ParticleEmitterAffector(void) {};
 	
 	virtual void _updateEmitter(Ogre::ParticleEmitter * emitter, SoundInfo * soundInfo, Message * spectrumInfo) = 0;
 };

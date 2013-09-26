@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\gst_glbspectrum\src\spectrumshared.cpp" />
+    <ClCompile Include="src\config_param.c" />
+    <ClCompile Include="src\convolve_fx.c" />
+    <ClCompile Include="src\drawmethods.c" />
+    <ClCompile Include="src\filters.c" />
+    <ClCompile Include="src\flying_stars_fx.c" />
+    <ClCompile Include="src\glb_basic.cpp" />
+    <ClCompile Include="src\glb_circles_visualfx.cpp" />
+    <ClCompile Include="src\glb_ogre3d_visualfx.cpp" />
+    <ClCompile Include="src\glb_visualfx.cpp" />
+    <ClCompile Include="src\glb_vlines_visualfx.cpp" />
+    <ClCompile Include="src\goom_core.c" />
+    <ClCompile Include="src\goom_tools.c" />
+    <ClCompile Include="src\graphic.c" />
+    <ClCompile Include="src\gstgoom.c" />
+    <ClCompile Include="src\gstspectrum.c" />
+    <ClCompile Include="src\ifs.c" />
+    <ClCompile Include="src\lines.c" />
+    <ClCompile Include="src\mathtools.c" />
+    <ClCompile Include="src\mmx.c" />
+    <ClCompile Include="src\ogre3d\FileSystemLayerImpl_WIN32.cpp" />
+    <ClCompile Include="src\ogre3d\ParticleFX.cpp" />
+    <ClCompile Include="src\ogre3d\SampleBrowser.cpp" />
+    <ClCompile Include="src\plugin_info.c" />
+    <ClCompile Include="src\sound_tester.c" />
+    <ClCompile Include="src\surf3d.c" />
+    <ClCompile Include="src\tentacle3d.c" />
+    <ClCompile Include="src\v3d.c" />
+    <ClCompile Include="src\xmmx.c" />
+    <ClCompile Include="src\ColorBandPEAffector.cpp">
+      <Filter>ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ColorPEAffector.cpp">
+      <Filter>ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CompositePEAffector.cpp">
+      <Filter>ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VelocityPEAffector.cpp">
+      <Filter>ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GoomPEAffector.cpp">
+      <Filter>ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LowToHighPSFactory.cpp">
+      <Filter>ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleSystemFactory.cpp">
+      <Filter>ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RandomPSFactory.cpp">
+      <Filter>ogre</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\gst_glbspectrum\src\spectrumshared.h" />
+    <ClInclude Include="src\drawmethods.h" />
+    <ClInclude Include="src\glb_basic.h" />
+    <ClInclude Include="src\glb_circles_visualfx.h" />
+    <ClInclude Include="src\glb_ogre3d_visualfx.h" />
+    <ClInclude Include="src\glb_visualfx.h" />
+    <ClInclude Include="src\glb_vlines_visualfx.h" />
+    <ClInclude Include="src\goom.h" />
+    <ClInclude Include="src\goom_config.h" />
+    <ClInclude Include="src\goom_config_param.h" />
+    <ClInclude Include="src\goom_filters.h" />
+    <ClInclude Include="src\goom_fx.h" />
+    <ClInclude Include="src\goom_graphic.h" />
+    <ClInclude Include="src\goom_plugin_info.h" />
+    <ClInclude Include="src\goom_tools.h" />
+    <ClInclude Include="src\goom_typedefs.h" />
+    <ClInclude Include="src\goom_visual_fx.h" />
+    <ClInclude Include="src\gstgoom.h" />
+    <ClInclude Include="src\gstspectrum.h" />
+    <ClInclude Include="src\ifs.h" />
+    <ClInclude Include="src\lines.h" />
+    <ClInclude Include="src\mathtools.h" />
+    <ClInclude Include="src\mmx.h" />
+    <ClInclude Include="src\motif_goom1.h" />
+    <ClInclude Include="src\motif_goom2.h" />
+    <ClInclude Include="src\ogre3d\FileSystemLayer.h" />
+    <ClInclude Include="src\ogre3d\FileSystemLayerImpl.h" />
+    <ClInclude Include="src\ogre3d\ParticleFX.h" />
+    <ClInclude Include="src\ogre3d\Sample.h" />
+    <ClInclude Include="src\ogre3d\SampleBrowser.h" />
+    <ClInclude Include="src\ogre3d\SampleContext.h" />
+    <ClInclude Include="src\ogre3d\SamplePlugin.h" />
+    <ClInclude Include="src\ogre3d\SdkCameraMan.h" />
+    <ClInclude Include="src\ogre3d\SdkSample.h" />
+    <ClInclude Include="src\ogre3d\SdkTrays.h" />
+    <ClInclude Include="src\ppc_drawings.h" />
+    <ClInclude Include="src\ppc_zoom_ultimate.h" />
+    <ClInclude Include="src\sound_tester.h" />
+    <ClInclude Include="src\surf3d.h" />
+    <ClInclude Include="src\tentacle3d.h" />
+    <ClInclude Include="src\v3d.h" />
+    <ClInclude Include="src\xmmx.h" />
+    <ClInclude Include="src\CompositePEAffector.h">
+      <Filter>ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ColorBandPEAffector.h">
+      <Filter>ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ColorPEAffector.h">
+      <Filter>ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VelocityPEAffector.h">
+      <Filter>ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GoomPEAffector.h">
+      <Filter>ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LowToHighPSFactory.h">
+      <Filter>ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystemFactory.h">
+      <Filter>ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleEmitterAffector.h">
+      <Filter>ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RandomPSFactory.h">
+      <Filter>ogre</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\cpp\ogre_src_v1-7-3\Samples\Media\particle\emitted_emitter.particle" />
+    <None Include="..\..\..\..\cpp\ogre_src_v1-7-3\Samples\Media\particle\Examples-Water.particle" />
+    <None Include="..\..\..\..\cpp\ogre_src_v1-7-3\Samples\Media\particle\Examples.particle" />
+    <None Include="..\..\..\..\cpp\ogre_src_v1-7-3\Samples\Media\particle\smoke.particle" />
+    <None Include="..\bin\Debug\plugins_d.cfg" />
+    <None Include="..\bin\Debug\resources_d.cfg" />
+    <None Include="..\bin\Debug\samples_d.cfg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ogre">
+      <UniqueIdentifier>{e56bfaac-7d80-4c3b-a56d-56b0d0302051}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

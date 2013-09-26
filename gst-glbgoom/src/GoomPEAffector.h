@@ -10,7 +10,7 @@ class GoomPEAffector :
 {
 public:
 	GoomPEAffector(void);
-	~GoomPEAffector(void);
+	virtual ~GoomPEAffector(void);
 
 	virtual void _updateEmitter(Ogre::ParticleEmitter * emitter, SoundInfo * soundInfo, Message * spectrumInfo);
 };

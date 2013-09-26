@@ -5,6 +5,10 @@
 
 namespace glb_ogre {
 
+/**
+* This affector changes the velocity and time to live of particles emitted
+* according to sound's speed and acceleration.
+*/
 class VelocityPEAffector :
 	public ParticleEmitterAffector
 {

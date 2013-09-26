@@ -154,7 +154,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GSTGLBGOOM_EXPORTS;HAVE_CONFIG_H;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../deps/boost_1_53_0;$(SolutionDir)../deps/ogre_src_v1-7-3/OgreMain/include;$(SolutionDir)../deps/ogre_src_v1-7-3_build/include;$(SolutionDir)../deps/ogre_src_v1-7-3/Dependencies/include/OIS;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/libxml2;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/glib-2.0;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/gstreamer-0.10;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/liboil-0.3;$(SolutionDir)../deps/gst-plugins-good-0.10.21/gst-libs;$(SolutionDir)../deps/gst-plugins-good-0.10.21/win32/common;C:\Users\pablo.rubi\cpp\glbcpphack\gst_glbspectrum\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../deps/boost_1_53_0;$(SolutionDir)../deps/ogre_src_v1-7-3/OgreMain/include;$(SolutionDir)../deps/ogre_src_v1-7-3_build/include;$(SolutionDir)../deps/ogre_src_v1-7-3/Dependencies/include/OIS;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/libxml2;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/glib-2.0;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/gstreamer-0.10;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/liboil-0.3;$(SolutionDir)../deps/gst-plugins-good-0.10.21/gst-libs;$(SolutionDir)../deps/gst-plugins-good-0.10.21/win32/common;$(SolutionDir)gst_glbspectrum/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -174,7 +174,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GSTGLBGOOM_EXPORTS;HAVE_CONFIG_H;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../deps/boost_1_53_0;$(SolutionDir)../deps/ogre_src_v1-7-3/OgreMain/include;$(SolutionDir)../deps/ogre_src_v1-7-3_build/include;$(SolutionDir)../deps/ogre_src_v1-7-3/Dependencies/include/OIS;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/libxml2;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/glib-2.0;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/gstreamer-0.10;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/liboil-0.3;$(SolutionDir)../deps/gst-plugins-good-0.10.21/gst-libs;$(SolutionDir)../deps/gst-plugins-good-0.10.21/win32/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../deps/boost_1_53_0;$(SolutionDir)../deps/ogre_src_v1-7-3/OgreMain/include;$(SolutionDir)../deps/ogre_src_v1-7-3_build/include;$(SolutionDir)../deps/ogre_src_v1-7-3/Dependencies/include/OIS;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/libxml2;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/glib-2.0;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/gstreamer-0.10;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/include/liboil-0.3;$(SolutionDir)../deps/gst-plugins-good-0.10.21/gst-libs;$(SolutionDir)../deps/gst-plugins-good-0.10.21/win32/common;$(SolutionDir)gst_glbspectrum/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -182,7 +182,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>libgstbase-0.10.lib;libgstreamer-0.10.lib;glib-2.0.lib;gobject-2.0.lib;oil-0.3.lib;OgreMain.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)../deps/boost_1_53_0/bin.v2/libs/atomic/build/msvc-10.0/release/link-static/threading-multi;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)../deps/boost-libs;$(SolutionDir)../deps/ogre_src_v1-7-3_build/lib/Release;$(SolutionDir)../deps/ogre_src_v1-7-3/Dependencies/lib/Release;$(SolutionDir)../deps/boost_1_53_0/bin.v2/libs/thread/build/msvc-10.0/release/link-static/threading-multi;$(SolutionDir)../deps/GStreamer/v0.10.7/sdk/lib;$(SolutionDir)../deps/boost_1_53_0/bin.v2/libs/atomic/build/msvc-10.0/release/link-static/threading-multi;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /y "$(TargetPath)" C:\gstreamer\plugins</Command>

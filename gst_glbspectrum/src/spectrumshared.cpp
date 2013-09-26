@@ -154,10 +154,10 @@ void writeMessage(Message * m) {
 	if (!myVector)
 		return;
 
-	for (int i = 0; i < m->spectrum_bands; i++) {
+	/*for (int i = 0; i < m->spectrum_bands; i++) {
 		if (m->magnitude[i] > -60)
 			std::cout << m->magnitude[i];
-	}
+	}*/
 	
 	// deallocates unused space
 	if (MEMALLOC/2 < sizeof(Message) * (myVector->size())) {
@@ -188,11 +188,7 @@ void readMessage(Message * m) {
 
 		std::copy(aux.magnitude, aux.magnitude + aux.spectrum_bands, m->magnitude);
 
-		for (int i = 0; i < m->spectrum_bands; i++) {
-			if (m->magnitude[i] > -60)
-				std::cout << m->magnitude[i];
-		}
-
+		
 		m->spectrum_bands = aux.spectrum_bands;
 		m->timestamp = aux.timestamp;
 		//printf("readMessage #%d: Popped back. \n", lastMessage-1);
@@ -201,7 +197,7 @@ void readMessage(Message * m) {
 		//	m->magnitude[i] = 0;
 
 		std::fill_n(m->magnitude, 128, 0); 
-		printf("readMessage: No new messages. \n");
+		//printf("readMessage: No new messages. \n");
 	}
 
 }

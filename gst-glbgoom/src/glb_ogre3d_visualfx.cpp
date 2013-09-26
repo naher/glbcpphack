@@ -22,6 +22,9 @@ namespace glb_goom
 
 namespace {
 	
+	/**
+	* Data accessible from ogre thread.
+	*/
 	struct ogre_thread_data 
 	{
 		PluginInfo & info;
@@ -78,19 +81,14 @@ namespace {
 	* Inits ogre's thread structures.
 	*/
 	void setupOgreThread(ogre_thread_data & data) {
-		data.fxdata.sample_browser.goStartRendering(&data.fxdata.sample);
-		
+
 		// get shared memory stored by spectrum
 	    useSharedMem();
+
+		data.fxdata.sample_browser.goStartRendering(&data.fxdata.sample);		
+
 	    // Signals spectrum
 	    setInit(1);
-				
-		// Initialize affectors
-		fountainColorAffector = new glb_ogre::ColorPEAffector();
-		fountainVelAffector = new glb_ogre::VelocityPEAffector();
-		fountainGoomAffector = new glb_ogre::GoomPEAffector();
-		
-		data.fxdata.sample.psFireworksEmBox->setMinParticleVelocity(150);
 
 		// Initialize avg aux variables
 		speedTotal = 0, speedAvg = 0.00001, speedTotalN = 0, speedAvgN = 0.00001; 
@@ -153,6 +151,9 @@ namespace {
 		fountainGoomAffector = NULL;
 	}
 
+	/**
+	* Starts Ogre setup, then starts the render loop, then stops Ogre.
+	*/
 	static gpointer
 	service_thread_func (gpointer user_data)
 	{
@@ -192,10 +193,7 @@ namespace {
 				readMessage(&m);
 
 				calculateAvgs(data.info.sound);
-
-				/*printf ("%f, %d, %f, %f, %f \n", 
-					soundInfo.speedvar, soundInfo.timeSinceLastGoom, soundInfo.goomPower, soundInfo.accelvar, soundInfo.volume);*/
-					
+	
 				logFile << soundInfo.speedvar << "," 
 						<< soundInfo.accelvar << ","
 						<< speedAvg << ","
@@ -231,6 +229,9 @@ namespace {
 
 }
 
+/**
+* Goom init. Spawns new ogre thread.
+*/
 void GlbOgre3DVisualFX::v_init(PluginInfo *info) 
 {
 	data = new GlbOgre3DVisualFXData;
@@ -269,6 +270,9 @@ void GlbOgre3DVisualFX::v_free()
 	data = NULL;
 }
 
+/**
+* Goom's window render loop
+*/
 void GlbOgre3DVisualFX::v_apply(Pixel *src, Pixel *dest, PluginInfo *goomInfo)
 {
 	SoundInfo const& soundInfo(goomInfo->sound);

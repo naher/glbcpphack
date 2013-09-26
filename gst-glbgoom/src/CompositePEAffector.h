@@ -6,6 +6,10 @@
 
 namespace glb_ogre {
 
+/**
+* Composite Particle Emitter Affector. Its _updateEmitter calls
+* every _updateEmitter of its components.
+*/
 class CompositePEAffector :
 	public ParticleEmitterAffector
 {
@@ -30,10 +34,10 @@ class CompositePEAffector :
 public:
 	CompositePEAffector();
 	CompositePEAffector(ParticleEmitterAffector_vector const & affectors);
-	~CompositePEAffector(void);
+	virtual ~CompositePEAffector(void);
 
 	void addAffector(ParticleEmitterAffector_ptr & affector);
-	void _updateEmitter(Ogre::ParticleEmitter * emitter, SoundInfo * soundInfo, Message * spectrumInfo);
+	virtual void _updateEmitter(Ogre::ParticleEmitter * emitter, SoundInfo * soundInfo, Message * spectrumInfo);
 
 private:
 	ParticleEmitterAffector_vector _affectors;

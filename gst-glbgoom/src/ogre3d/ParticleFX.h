@@ -10,15 +10,21 @@
 #include "../VelocityPEAffector.h"
 #include "../GoomPEAffector.h"
 
+#include <sstream>
+
+#define BANDS 14
+
 using namespace Ogre;
 using namespace OgreBites;
-
-//class _OgreSampleClassExport Sample_ParticleFX : public SdkSample
+/**
+* Class responsible for creating graphic components in Ogre scene.
+*/
 class Sample_ParticleFX : public SdkSample
 {
 public:
 
 	Sample_ParticleFX()
+		: emitters_affectors(128)
 	{
 		mInfo["Title"] = "Particle Effects";
 		mInfo["Description"] = "Demonstrates the creation and usage of particle effects.";
@@ -49,27 +55,15 @@ protected:
 
 	float cameraPositionX, cameraPositionY;
 
+	/**
+	* Sets up the graphic components at the init phase.
+	*/
 	void setupContent()
 	{
 	// set camera initial positions
 		cameraPositionX = 0; cameraPositionY = 20; cameraDistance = 550;
 		cameraHRotationSpeed = 0; cameraVRotationSpeed = 0;
-
-	// set up a mini screen (intermediate ogre tutorial)
-		/*Ogre::Rectangle2D *mMiniScreen = new Ogre::Rectangle2D(true);
-		mMiniScreen->setCorners(0.5f, -0.5f, 1.0f, -1.0f);
-		mMiniScreen->setBoundingBox(Ogre::AxisAlignedBox(-100000.0f * Ogre::Vector3::UNIT_SCALE, 
-															100000.0f * Ogre::Vector3::UNIT_SCALE));
-
-		Ogre::SceneNode* miniScreenNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("MiniScreenNode");
-		miniScreenNode->attachObject(mMiniScreen);
-
-		Ogre::MaterialPtr renderMaterial = Ogre::MaterialManager::getSingleton().create("RttMat", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-		renderMaterial->getTechnique(0)->getPass(0)->setLightingEnabled(false);
-		renderMaterial->getTechnique(0)->getPass(0)->createTextureUnitState("RttTex");
-
-		mMiniScreen->setMaterial("RttMat");*/
-
+		
 	// setup some basic lighting for our scene
 		mSceneMgr->setAmbientLight(ColourValue(0.3, 0.3, 0.3));
 		light = mSceneMgr->createLight();
@@ -94,22 +88,7 @@ protected:
  
 		manual->end();
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(manual);
-
-		/*Entity* planeEnt = mSceneMgr->createEntity("Plane", SceneManager::PT_PLANE);
-		SceneNode * floor = mSceneMgr->createSceneNode("Floor");
-		floor->attachObject(planeEnt);
-		floor->rotate(Ogre::Quaternion(Ogre::Radian(Ogre::Degree(-90)),Ogre::Vector3::UNIT_X));
-		floor->translate(0,-100,0);
-		floor->scale(100,100,100);
 		
-		mSceneMgr->getRootSceneNode()->addChild(floor);*/
- 
-		// Give the plane a texture
-		//planeEnt->setMaterialName("Examples/BeachStones");
- 
-		// Attach the 2 new entities to the root of the scene
-		//mSceneMgr->getRootSceneNode()->attachObject(floor);
-
 	// create Globant logo
 		SceneNode* nodeGlbLogo = mSceneMgr->getRootSceneNode()->createChildSceneNode("GlobantLogo");
 		Entity* glbLogo = mSceneMgr->createEntity("GlobantLogo0", "GlobantLogo.mesh");
@@ -125,6 +104,7 @@ protected:
 		nodeOgre->attachObject(ogreHead);
 		nodeOgre->setPosition(0,-50,0);
 
+	// create sky
 		mSceneMgr->setSkyDome(true, "Examples/CloudySky", 5, 8);
 		
 		setupParticles();   // setup particles
@@ -133,6 +113,8 @@ protected:
 
 	void setupParticles()
 	{
+		glb_ogre::ParticleEmitterAffector_vector affectors;
+
 		ParticleSystem::setDefaultNonVisibleUpdateTimeout(5);  // set nonvisible timeout
 
 		ParticleSystem* ps;
@@ -144,30 +126,28 @@ protected:
 			psFireworksAfLF = psFireworks->getAffector(0);
 			psFireworksAfCF = psFireworks->getAffector(1);
 		mSceneMgr->getRootSceneNode()->attachObject(ps);
+		psFireworksEmBox->setMinParticleVelocity(150);
 
-        // create a green nimbus around the ogre head
-		//glb_ogre::ParticleSystemFactory * psFactory = new glb_ogre::LowToHighPSFactory(mSceneMgr,"Examples/GreenyNimbus",6);
-		glb_ogre::ParticleSystemFactory * psFactory = new glb_ogre::RandomPSFactory(mSceneMgr,"Examples/GreenyNimbus",6, 700, 700);
-		
-		glb_ogre::ParticleEmitterAffector_vector affectors;
+		// add a goom affector to fireworks ps
+		affectors.push_back(glb_ogre::ParticleEmitterAffector_ptr(new glb_ogre::GoomPEAffector));
+		emitters_affectors.push_back(std::make_pair(psFireworks->getEmitter(0), affectors));
+		affectors.clear();
 
-		//affectors.push_back(glb_ogre::ParticleEmitterAffector_ptr(new glb_ogre::ColorPEAffector()));
-			
-		for (int i = 0; i < 6; i++) {
+        // create a green nimbus line around the ogre head
+		glb_ogre::ParticleSystemFactory * psFactory = new glb_ogre::LowToHighPSFactory(mSceneMgr,"Examples/GreenyNimbus",BANDS);
+					
+		// create an affector for each nimbus created
+		for (int i = 0; i < BANDS; i++) {
 			affectors.clear();
 			affectors.push_back(glb_ogre::ParticleEmitterAffector_ptr(
-				new glb_ogre::ColorBandPEAffector(i%2, (float)(i%4)/6, (float)(i%3)/6, (float)(i%2)/6, -46)));
-				//new glb_ogre::ColorPEAffector()));
+				new glb_ogre::ColorBandPEAffector(i, (float)((i+1)%BANDS)/BANDS, 
+													 (float)((i+1)%(BANDS/2))/BANDS, 
+													 (float)((i+1)%(BANDS/3))/BANDS, -46)));
+			std::stringstream str; str << "Nimbus" << i;
 			emitters_affectors.push_back(
-				std::make_pair(psFactory->createInstance("Nimbus"+i, i)->getEmitter(0), affectors));
+				std::make_pair(psFactory->createInstance(str.str(), i)->getEmitter(0), affectors));
 		}
-
-        /*psGreenyNimbus = ps = mSceneMgr->createParticleSystem("Nimbus", "Examples/GreenyNimbus");
-			psGreenyNimbusEmBox = ps->getEmitter(0);
-			psGreenyNimbusAfLF;
-			psGreenyNimbusAfCF;
-		mSceneMgr->getRootSceneNode()->attachObject(ps);*/
-       
+		       
         psRain = ps = mSceneMgr->createParticleSystem("Rain", "Examples/Rain");  // create a rainstorm
         ps->fastForward(5);   // fast-forward the rain so it looks more natural
 			psRainEmBox = ps->getEmitter(0);
@@ -199,17 +179,13 @@ protected:
         // attach the fountain to a child node of the pivot at a distance and angle
 		mFountainPivot->createChildSceneNode(Vector3(-200, -100, 0), Quaternion(Degree(-20), Vector3::UNIT_Z))->attachObject(ps);
 
-		// Initialize affectors
+		// create affectors for fountain ps
 		affectors.clear();
-		affectors.push_back(glb_ogre::ParticleEmitterAffector_ptr(new glb_ogre::ColorBandPEAffector(5, 1, 1, 1, 30)));
+		affectors.push_back(glb_ogre::ParticleEmitterAffector_ptr(new glb_ogre::ColorPEAffector));
 		affectors.push_back(glb_ogre::ParticleEmitterAffector_ptr(new glb_ogre::VelocityPEAffector));
 		emitters_affectors.push_back(std::make_pair(psPurpleFountain1->getEmitter(0), affectors));
 		emitters_affectors.push_back(std::make_pair(psPurpleFountain2->getEmitter(0), affectors));
-
-		affectors.clear();
-		affectors.push_back(glb_ogre::ParticleEmitterAffector_ptr(new glb_ogre::GoomPEAffector));
-		emitters_affectors.push_back(std::make_pair(psFireworks->getEmitter(0), affectors));
-
+		
 	}
 
 	void setupTogglers()
@@ -220,7 +196,7 @@ protected:
 		mTrayMgr->createCheckBox(TL_TOPLEFT, "Fountain1", "Fountain A", 130)->setChecked(true);
 		mTrayMgr->createCheckBox(TL_TOPLEFT, "Fountain2", "Fountain B", 130)->setChecked(true);
 		mTrayMgr->createCheckBox(TL_TOPLEFT, "Aureola", "Aureola", 130)->setChecked(false);
-		mTrayMgr->createCheckBox(TL_TOPLEFT, "Nimbus", "Nimbus", 130)->setChecked(true);
+		//mTrayMgr->createCheckBox(TL_TOPLEFT, "Nimbus", "Nimbus", 130)->setChecked(true);
 		mTrayMgr->createCheckBox(TL_TOPLEFT, "Rain", "Rain", 130)->setChecked(false);
 	}
 

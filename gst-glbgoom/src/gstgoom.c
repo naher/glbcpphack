@@ -178,12 +178,7 @@ gst_goom_init (GstGoom * goom)
   gst_element_add_pad (GST_ELEMENT (goom), goom->srcpad);
 
   goom->adapter = gst_adapter_new ();
-
-  // Custom code to add spectrum to goom
-  /*gstSpectrum = (GstSpectrum *)malloc(sizeof(GstSpectrum));
-  spectrum_init(gstSpectrum);
-  gstSpectrum->adapter = goom->adapter;*/
-
+  
   goom->width = 320;
   goom->height = 200;
   goom->fps_n = 25;             /* desired frame rate */
